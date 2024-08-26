@@ -32,6 +32,8 @@ RUN pip install --no-cache-dir --upgrade pip setuptools && \
 
 ENV PYTHONPATH=$PYTHONPATH:/home/user
 
+RUN python -c "import nltk; nltk.download('punkt_tab'); nltk.download('averaged_perceptron_tagger_eng')"
+
 USER root
 
 RUN mkdir -p /home/user/comps/dataprep/redis/langchain/uploaded_files && chown -R user /home/user/comps/dataprep/redis/langchain/uploaded_files
