@@ -19,6 +19,7 @@ from comps import (
     register_microservice,
     register_statistics,
     statistics_dict,
+    opea_telemetry,
 )
 from comps.cores.proto.api_protocol import (
     ChatCompletionRequest,
@@ -41,6 +42,7 @@ tei_embedding_endpoint = os.getenv("TEI_EMBEDDING_ENDPOINT")
     port=7000,
 )
 @register_statistics(names=["opea_service@retriever_redis"])
+@opea_telemetry
 def retrieve(
     input: Union[EmbedDoc, RetrievalRequest, ChatCompletionRequest]
 ) -> Union[SearchedDoc, RetrievalResponse, ChatCompletionRequest]:

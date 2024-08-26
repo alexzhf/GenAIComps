@@ -39,6 +39,7 @@ def post_process_text(text: str):
     host="0.0.0.0",
     port=9000,
 )
+@opea_telemetry
 def llm_generate(input: LLMParamsDoc):
     if logflag:
         logger.info(input)

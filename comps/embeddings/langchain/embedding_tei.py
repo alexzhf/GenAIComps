@@ -16,6 +16,7 @@ from comps import (
     register_microservice,
     register_statistics,
     statistics_dict,
+    opea_telemetry,
 )
 from comps.cores.proto.api_protocol import (
     ChatCompletionRequest,
@@ -36,6 +37,7 @@ logflag = os.getenv("LOGFLAG", False)
     port=6000,
 )
 @register_statistics(names=["opea_service@embedding_tei_langchain"])
+@opea_telemetry
 def embedding(
     input: Union[TextDoc, EmbeddingRequest, ChatCompletionRequest]
 ) -> Union[EmbedDoc, EmbeddingResponse, ChatCompletionRequest]:

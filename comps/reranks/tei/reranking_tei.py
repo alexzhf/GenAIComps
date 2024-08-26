@@ -19,6 +19,7 @@ from comps import (
     register_microservice,
     register_statistics,
     statistics_dict,
+    opea_telemetry,
 )
 from comps.cores.proto.api_protocol import (
     ChatCompletionRequest,
@@ -41,6 +42,7 @@ logflag = os.getenv("LOGFLAG", False)
     output_datatype=LLMParamsDoc,
 )
 @register_statistics(names=["opea_service@reranking_tgi_gaudi"])
+@opea_telemetry
 def reranking(
     input: Union[SearchedDoc, RerankingRequest, ChatCompletionRequest]
 ) -> Union[LLMParamsDoc, RerankingResponse, ChatCompletionRequest]:

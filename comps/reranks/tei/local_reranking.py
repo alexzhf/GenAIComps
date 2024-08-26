@@ -13,6 +13,7 @@ from comps import (
     TextDoc,
     opea_microservices,
     register_microservice,
+    opea_telemetry,
 )
 
 logger = CustomLogger("local_reranking")
@@ -28,6 +29,7 @@ logflag = os.getenv("LOGFLAG", False)
     input_datatype=SearchedDoc,
     output_datatype=RerankedDoc,
 )
+@opea_telemetry
 def reranking(input: SearchedDoc) -> RerankedDoc:
     if logflag:
         logger.info(input)
