@@ -54,12 +54,25 @@ def llm_generate(input: LLMParamsDoc):
         temperature=input.temperature,
         streaming=input.streaming,
     )
+    
+    # generate RAG template
+    
+    if input.documents:
+        rag_template = """You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise. \n Question: {question} \n Context: {context} \n Answer:"""
+
+        if input.documents:
+            context="\n".join(input.documents)
+            refined_input=rag_template.format(question=input.query, context=context)
+            if logflag:
+                logger.info(refined_input)
+        else:
+            refined_input=input.query
 
     if input.streaming:
 
         def stream_generator():
             chat_response = ""
-            for text in llm.stream(input.query):
+            for text in llm.stream(refined_input):
                 chat_response += text
                 chunk_repr = repr(text.encode("utf-8"))
                 yield f"data: {chunk_repr}\n\n"
@@ -69,10 +82,10 @@ def llm_generate(input: LLMParamsDoc):
 
         return StreamingResponse(stream_generator(), media_type="text/event-stream")
     else:
-        response = llm.invoke(input.query)
+        response = llm.invoke(refined_input)
         if logflag:
             logger.info(response)
-        return GeneratedDoc(text=response, prompt=input.query)
+        return GeneratedDoc(text=response, prompt=refined_input)
 
 
 if __name__ == "__main__":
