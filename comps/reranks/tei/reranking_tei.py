@@ -28,10 +28,12 @@ from comps.cores.proto.api_protocol import (
     RerankingResponseData,
 )
 
+# it might be cpu
 logger = CustomLogger("reranking_tgi_gaudi")
 logflag = os.getenv("LOGFLAG", False)
 
 
+# it might be cpu
 @register_microservice(
     name="opea_service@reranking_tgi_gaudi",
     service_type=ServiceType.RERANK,
